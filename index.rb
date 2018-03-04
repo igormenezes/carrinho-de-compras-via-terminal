@@ -2,19 +2,22 @@ load 'Product.rb'
 load 'Payment.rb'
 
 def start(product)
-    puts "Digite o número do produto que deseja comprar: \n \n"
-    puts "1 - Livro \n"
-    puts "2 - Assinatura de Serviço \n"
-    puts "3 - Música \n\n"
-        
-    value = gets
-        
-    if ![1, 2, 3].include? value.to_i 
-        puts "VOCÊ DIGITOU UM VALOR INVÁLIDO! \n \n"
-        start product
-    end
+    loop do
+        puts "Digite o número do produto que deseja comprar: \n \n"
+        puts "1 - Livro \n"
+        puts "2 - Assinatura de Serviço \n"
+        puts "3 - Música \n\n"
+                
+        @value = gets
+                
+        if [1, 2, 3].include? @value.to_i 
+            break      
+        end
 
-    item = product.item value.to_i
+        puts "VOCÊ DIGITOU UM VALOR INVÁLIDO! \n \n"  
+    end
+    
+    item = product.item @value.to_i
 
     puts "Adicionado o seguinte item: \n \n"
     puts "Produto: #{item[:name]} \n"
@@ -23,12 +26,12 @@ def start(product)
 
     loop do 
         puts "Deseja adicionar outro item ao carrinho? (S) - Sim (N) - Não"
-        value = gets
+        @value = gets
 
-        if value.strip.upcase == 'S'
+        if @value.strip.upcase == 'S'
             start product
             break
-        elsif value.strip.upcase == 'N'
+        elsif @value.strip.upcase == 'N'
             finalizePurchase product
             break
         end
@@ -59,12 +62,12 @@ def finalizePurchase(product)
 
     loop do 
         puts puts "Deseja finalizar a compra? (S) - Sim (N) - Não"
-        value = gets
+        @value = gets
 
-        if value.strip.upcase == 'S'
+        if @value.strip.upcase == 'S'
             payment.finalize
             break
-        elsif value.strip.upcase == 'N'
+        elsif @value.strip.upcase == 'N'
             puts "Compra foi abandonada!"
             break
         end
